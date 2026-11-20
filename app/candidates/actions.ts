@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { requireActiveSubscription } from "@/lib/billing-access";
+import { requireActiveSubscription, requirePlanCapacity } from "@/lib/billing-access";
 
 export async function createCandidate(formData: FormData) {
   const fullName = String(formData.get("fullName") ?? "").trim();
@@ -17,7 +17,7 @@ export async function createCandidate(formData: FormData) {
   const { data: auth } = await supabase.auth.getClaims(); if (!auth?.claims) redirect("/login");
   const { data: membership } = await supabase.from("organization_members").select("organization_id,role").order("created_at",{ascending:true}).limit(1).maybeSingle();
   if (!membership || !["owner","admin","recruiter"].includes(membership.role)) redirect("/dashboard?error=You%20do%20not%20have%20permission%20to%20add%20candidates");
-  await requireActiveSubscription(membership.organization_id, "/candidates");
+  await requirePlanCapacity(membership.organization_id, "candidates", "/candidates");
 
   const { error } = await supabase.from("candidates").insert({
     organization_id:membership.organization_id, full_name:fullName, email:email||null,
