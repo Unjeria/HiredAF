@@ -42,6 +42,7 @@ export async function updateJobStatus(formData: FormData) {
   if (!membership) redirect("/dashboard");
   if (!["owner","admin","recruiter"].includes(membership.role)) redirect("/dashboard?error=You%20cannot%20update%20jobs");
   await requireActiveSubscription(membership.organization_id, "/jobs");
+  if (status === "open") await requirePlanCapacity(membership.organization_id, "openJobs", "/jobs", id);
   const { error } = await supabase.from("jobs").update({status: status as "draft"|"open"|"paused"|"closed",updated_at:new Date().toISOString()}).eq("id",id).eq("organization_id",membership.organization_id);
   if(error) redirect("/jobs?error=Could%20not%20update%20job");
   revalidatePath("/jobs"); revalidatePath("/dashboard"); redirect("/jobs?success=Job%20updated");
