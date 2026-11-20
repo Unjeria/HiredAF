@@ -9,7 +9,7 @@ export async function startCheckout(formData: FormData) {
   const plan = String(formData.get("plan") ?? "");
   if (!isPlanKey(plan)) redirect("/pricing?error=Choose%20a%20valid%20plan");
   const price = planPrices[plan];
-  if (!price) redirect("/pricing?error=Billing%20is%20not%20configured%20yet");
+  if (!price || !process.env.STRIPE_WEBHOOK_SECRET || !process.env.STRIPE_SECRET_KEY) redirect("/pricing?error=Billing%20setup%20is%20not%20complete%20yet");
 
   const supabase = await createClient();
   const [{ data: auth }, { data: membership }] = await Promise.all([
