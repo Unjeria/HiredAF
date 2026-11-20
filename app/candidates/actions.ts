@@ -2,6 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { requireActiveSubscription } from "@/lib/billing-access";
 
 export async function createCandidate(formData: FormData) {
   const fullName = String(formData.get("fullName") ?? "").trim();
@@ -16,6 +17,7 @@ export async function createCandidate(formData: FormData) {
   const { data: auth } = await supabase.auth.getClaims(); if (!auth?.claims) redirect("/login");
   const { data: membership } = await supabase.from("organization_members").select("organization_id,role").order("created_at",{ascending:true}).limit(1).maybeSingle();
   if (!membership || !["owner","admin","recruiter"].includes(membership.role)) redirect("/dashboard?error=You%20do%20not%20have%20permission%20to%20add%20candidates");
+  await requireActiveSubscription(membership.organization_id, "/candidates");
 
   const { error } = await supabase.from("candidates").insert({
     organization_id:membership.organization_id, full_name:fullName, email:email||null,
@@ -33,6 +35,7 @@ export async function addApplication(formData: FormData) {
   const supabase=await createClient(); const {data:auth}=await supabase.auth.getClaims(); if(!auth?.claims) redirect("/login");
   const {data:membership}=await supabase.from("organization_members").select("organization_id,role").order("created_at",{ascending:true}).limit(1).maybeSingle();
   if(!membership||!["owner","admin","recruiter"].includes(membership.role)) redirect("/dashboard?error=You%20cannot%20manage%20applications");
+  await requireActiveSubscription(membership.organization_id, "/pipeline");
   const {error}=await supabase.from("applications").insert({organization_id:membership.organization_id,job_id:jobId,candidate_id:candidateId});
   if(error) redirect("/pipeline?error=Could%20not%20add%20application.%20It%20may%20already%20exist.");
   revalidatePath("/pipeline"); revalidatePath("/dashboard"); redirect("/pipeline?success=Application%20added");
