@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { randomBytes } from "node:crypto";
 import { createClient } from "@/lib/supabase/server";
 import { getStripe, isPlanKey, planPrices } from "@/lib/stripe";
 
@@ -34,7 +35,7 @@ export async function startCheckout(formData: FormData) {
     subscription_data: { metadata },
     success_url: `${siteUrl}/billing/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${siteUrl}/pricing?cancelled=1`,
-    integration_identifier: "hiredaf_web_abcdefgh",
+    integration_identifier: `hiredaf_web_${Array.from(randomBytes(8), byte => String.fromCharCode(97 + (byte % 26))).join("")}`,
   });
   if (!session.url) redirect("/pricing?error=Unable%20to%20start%20checkout");
   redirect(session.url);
