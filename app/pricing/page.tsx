@@ -35,7 +35,7 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
         </article>)}
       </div>
       <p className="mt-8 max-w-3xl text-[10px] leading-6 text-[#85877D]">HiredAF is in an early release. The live workspace currently supports jobs, candidates, applications, and pipeline tracking. Some advanced capabilities shown in plan descriptions are still being developed and should not be relied on until confirmed available. Hiring decisions remain with your team.</p>
-      <p className="mt-3 text-[10px] text-[#85877D]">Need a larger agreement? <a className="font-bold text-[#E85B3E] underline" href="mailto:hello@hiredaf.com">Contact us</a> about Enterprise.</p>
+      <p className="mt-3 text-[10px] text-[#85877D]">Enterprise agreements are handled separately. Contact details will be provided before the Enterprise plan opens.</p>
     </section>
     <footer className="mx-auto max-w-6xl border-t border-black/10 py-5 text-[9px] text-[#85877D]">© {new Date().getFullYear()} HiredAF</footer>
   </main>;
