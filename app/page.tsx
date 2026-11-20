@@ -1,118 +1,116 @@
 import Link from "next/link";
 import {
-  ArrowDown, ArrowRight, ArrowUpRight, Bot, BriefcaseBusiness, Check,
-  CircleHelp, ClipboardList, FileSearch, Layers3, MessageSquareText,
-  ShieldCheck, Sparkles, Users, Workflow, Zap,
+  ArrowRight, ArrowUpRight, Check, Clock3, FileText, Search,
+  Users, Workflow, Zap, ShieldCheck, ChevronDown,
 } from "lucide-react";
 
-const benefits = [
-  { n: "01", icon: BriefcaseBusiness, title: "Bring every role into focus.", copy: "Create and manage open positions in one place. Keep the role, requirements, and hiring activity connected." },
-  { n: "02", icon: Users, title: "Build a talent pool that stays useful.", copy: "Keep candidate profiles, contact details, experience notes, and sources organized for your whole team." },
-  { n: "03", icon: Workflow, title: "Know what happens next.", copy: "Move applicants through clear hiring stages, from first review to interview, offer, and hire." },
-];
-
-const workflow = [
-  ["01", "Set up the role", "Define the position, what matters, and the kind of person your team needs."],
-  ["02", "Bring people together", "Add applicants and prospects to a shared candidate workspace. Keep the context with the person."],
-  ["03", "Move the process forward", "Track every application and next step without losing people in spreadsheets and inboxes."],
-];
-
-const faqs = [
-  ["Who is HiredAF for?", "HiredAF is being built for small and growing businesses that need a more organized way to manage recruiting without a complicated enterprise system."],
-  ["Is HiredAF an applicant tracking system?", "Yes. The core workspace brings together jobs, candidate profiles, applications, and hiring stages so teams can manage their recruiting process in one place."],
-  ["Does HiredAF use AI?", "AI-assisted recruiting is part of the product direction. The goal is to reduce repetitive work and help teams organize information. People remain responsible for evaluating candidates and making hiring decisions."],
-  ["Can my team work together?", "HiredAF supports company workspaces with role-based access so owners, admins, recruiters, and read-only teammates can work with the same hiring information."],
-  ["Is HiredAF available now?", "The product is in its early build stage. You can explore the workspace as we prepare the first release."],
-];
-
-function Logo({ inverse = false }: { inverse?: boolean }) {
-  return <Link href="/" className={`inline-flex items-center gap-2.5 text-[23px] font-black tracking-[-.075em] ${inverse ? "text-white" : "text-[#20221C]"}`}>
-    <span className="grid h-8 w-8 place-items-center rounded-[10px] bg-[#C6F36B] text-[17px] font-black tracking-[-.1em] text-[#20221C]">H.</span>
-    hired<span className="text-[#9BCB42]">AF</span>
+function Logo({ light = false }: { light?: boolean }) {
+  return <Link href="/" className={`inline-flex items-center gap-2 text-[22px] font-black tracking-[-.08em] ${light ? "text-white" : "text-[#171916]"}`}>
+    <span className="grid h-8 w-8 place-items-center rounded-md bg-[#FF6848] text-[15px] text-white">H</span>
+    hired<span className="text-[#FF6848]">AF</span>
   </Link>;
 }
 
-function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
-  return <p className={`mb-5 inline-flex items-center gap-2 text-[10px] font-extrabold tracking-[.2em] ${light ? "text-white/55" : "text-[#77796F]"}`}><span className="h-1.5 w-1.5 rounded-full bg-[#A7D64F]" />{children}</p>;
-}
+const steps = [
+  { n: "01", title: "Get the role clear.", body: "Put the job, requirements, and hiring priorities in one place before the first application lands.", icon: FileText },
+  { n: "02", title: "Keep good people in view.", body: "Bring candidate profiles and notes together so promising people don't disappear in inboxes.", icon: Users },
+  { n: "03", title: "Know the next move.", body: "See where every application stands and keep the process moving with your team.", icon: Workflow },
+];
 
-function ProductWindow() {
-  return <div className="relative mx-auto w-full max-w-[620px]">
-    <div className="absolute -right-10 top-12 h-48 w-48 rounded-full bg-[#C6F36B]/70 blur-[80px]" />
-    <div className="absolute -bottom-10 -left-8 h-48 w-48 rounded-full bg-[#DDE5CB] blur-[70px]" />
-    <div className="relative rounded-[26px] border border-black/10 bg-white p-3 shadow-[0_35px_100px_rgba(30,35,20,.15)] sm:p-5">
-      <div className="flex items-center justify-between border-b border-black/[.07] px-2 pb-4">
-        <div className="flex items-center gap-2"><span className="grid h-7 w-7 place-items-center rounded-lg bg-[#20221C] text-[#C6F36B]"><Layers3 size={14}/></span><span className="text-[12px] font-bold">hiredAF <span className="font-normal text-[#A0A197]">/ workspace</span></span></div>
-        <div className="flex gap-1.5"><i className="h-2 w-2 rounded-full bg-[#E9E9E3]"/><i className="h-2 w-2 rounded-full bg-[#E9E9E3]"/><i className="h-2 w-2 rounded-full bg-[#E9E9E3]"/></div>
+const questions = [
+  ["Who is HiredAF built for?", "Small and growing businesses that need a practical way to organize recruiting without taking on an enterprise-sized system."],
+  ["What can I do in HiredAF today?", "The early workspace is being built around jobs, candidate profiles, applications, and a hiring pipeline. You can create a workspace and explore the core recruiting flow."],
+  ["Does HiredAF make hiring decisions?", "No. The goal is to help teams organize information and reduce repetitive work. People remain responsible for assessing candidates and making employment decisions."],
+  ["Is the product fully launched?", "HiredAF is in its early build stage. The current experience is evolving, and we're opening the door for early users to explore it."],
+];
+
+function HiringBoard() {
+  return <div className="relative mx-auto w-full max-w-[590px]">
+    <div className="absolute -right-8 -top-8 h-52 w-52 rounded-full bg-[#FF6848]/20 blur-[75px]" />
+    <div className="relative rotate-[1deg] border-[5px] border-[#171916] bg-[#F8F7F2] p-3 shadow-[16px_18px_0_#FF6848] sm:p-5">
+      <div className="flex items-center justify-between border-b border-[#DCDAD1] pb-3">
+        <div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#FF6848]"/><span className="text-[10px] font-black tracking-[.12em]">HIREDAF / YOUR TEAM</span></div>
+        <span className="text-[9px] font-bold text-[#898A82]">WORKSPACE PREVIEW</span>
       </div>
-      <div className="grid grid-cols-[104px_1fr] gap-3 pt-4">
-        <aside className="space-y-2 rounded-xl bg-[#20221C] p-3 text-white">
-          <p className="mb-4 text-[8px] font-bold tracking-[.16em] text-white/35">WORKSPACE</p>
-          {["Overview","Jobs","Candidates","Pipeline"].map((x,i)=><div key={x} className={`rounded-lg px-2 py-2 text-[9px] font-semibold ${i===0?"bg-[#414638] text-[#C6F36B]":"text-white/60"}`}>{x}</div>)}
+      <div className="grid grid-cols-[82px_1fr] gap-3 pt-4 sm:grid-cols-[112px_1fr] sm:gap-5">
+        <aside className="space-y-2 bg-[#171916] p-2.5 text-white sm:p-3">
+          <p className="mb-4 text-[8px] font-bold tracking-[.15em] text-white/35">YOUR SPACE</p>
+          {["Overview","Open roles","Candidates","Pipeline"].map((x,i)=><div key={x} className={`px-2 py-2 text-[8px] font-bold sm:text-[9px] ${i===2?"bg-[#FF6848] text-white":"text-white/55"}`}>{x}</div>)}
+          <div className="mt-8 border-t border-white/15 pt-3 text-[8px] leading-4 text-white/40">Keep the whole hiring picture in one place.</div>
         </aside>
         <div className="min-w-0">
-          <p className="text-[9px] font-bold tracking-[.15em] text-[#999B91]">YOUR HIRING HQ</p>
-          <h3 className="mt-1 text-[22px] font-black tracking-[-.06em]">A clearer view of hiring<span className="text-[#9BCB42]">.</span></h3>
-          <div className="mt-4 grid grid-cols-3 gap-2">
-            {[["08","Open roles"],["24","Candidates"],["12","In review"]].map(([n,l])=><div key={l} className="rounded-xl bg-[#F6F7F2] p-2.5"><p className="text-[20px] font-black tracking-[-.06em]">{n}</p><p className="mt-1 text-[8px] font-semibold text-[#85877D]">{l}</p></div>)}
+          <p className="text-[8px] font-extrabold tracking-[.16em] text-[#85867E]">CANDIDATE PIPELINE</p>
+          <div className="mt-1 flex items-end justify-between gap-2"><h3 className="text-[22px] font-black leading-none tracking-[-.07em] sm:text-[29px]">People, not paperwork.</h3><span className="bg-[#E8E9E1] px-2 py-1 text-[7px] font-bold">SAMPLE</span></div>
+          <div className="mt-4 grid grid-cols-3 gap-1.5 sm:gap-2">
+            {[["06","Open roles"],["18","Candidates"],["04","Interviews"]].map(([n,l])=><div key={l} className="border border-[#DCDAD1] bg-white p-2"><p className="text-[18px] font-black tracking-[-.06em] sm:text-[22px]">{n}</p><p className="mt-1 text-[7px] font-bold text-[#85867E] sm:text-[8px]">{l}</p></div>)}
           </div>
-          <div className="mt-3 rounded-xl border border-black/[.07] p-3">
-            <div className="flex items-center justify-between"><p className="text-[10px] font-bold">Recent candidates</p><span className="text-[8px] text-[#999B91]">SAMPLE DATA</span></div>
-            {[[ "JT","Jordan Taylor","Product Designer","Interview"],["MB","Morgan Brooks","Software Engineer","Reviewing"],["AR","Alex Rivera","Growth Marketing","New"]].map(([initials,name,role,stage],i)=><div key={name} className="mt-3 flex items-center gap-2"><span className={`grid h-7 w-7 place-items-center rounded-full text-[8px] font-black ${i===0?"bg-[#E6EDDA]":i===1?"bg-[#F1E9DF]":"bg-[#E9E5F0]"}`}>{initials}</span><div className="min-w-0 flex-1"><p className="truncate text-[9px] font-bold">{name}</p><p className="truncate text-[8px] text-[#999B91]">{role}</p></div><span className="rounded-full bg-[#F0F3E9] px-2 py-1 text-[7px] font-bold text-[#6E8D3B]">{stage}</span></div>)}
+          <div className="mt-3 border border-[#DCDAD1] bg-white p-2.5 sm:p-3">
+            <div className="flex items-center justify-between"><span className="text-[9px] font-black">Recently updated</span><span className="text-[7px] text-[#85867E]">VIEW ALL ↗</span></div>
+            {[[ "AM","Avery Morgan","Operations Lead","Interview"],["JC","Jamie Chen","Customer Success","Review"],["RP","Riley Parker","Sales Associate","New"]].map(([initials,name,role,status])=><div key={name} className="flex items-center gap-2 border-t border-[#EEEDE8] py-2.5 first:mt-2"><span className="grid h-7 w-7 shrink-0 place-items-center bg-[#FCE3DC] text-[8px] font-black">{initials}</span><div className="min-w-0 flex-1"><p className="truncate text-[8px] font-extrabold sm:text-[9px]">{name}</p><p className="truncate text-[7px] text-[#85867E] sm:text-[8px]">{role}</p></div><span className="bg-[#F1F0E9] px-1.5 py-1 text-[7px] font-bold">{status}</span></div>)}
           </div>
         </div>
       </div>
-      <div className="mt-4 flex items-center gap-3 rounded-xl bg-[#20221C] p-3.5 text-white"><span className="grid h-8 w-8 place-items-center rounded-lg bg-[#C6F36B] text-[#20221C]"><Sparkles size={15}/></span><div className="flex-1"><p className="text-[10px] font-bold">A smarter recruiting workflow</p><p className="mt-0.5 text-[8px] text-white/50">Less admin. More room for people.</p></div><ArrowUpRight size={15} className="text-[#C6F36B]"/></div>
-      <p className="px-1 pt-3 text-center text-[8px] text-[#A0A197]">Illustrative product preview · Sample data</p>
+      <div className="mt-3 flex items-center gap-2 bg-[#E9E9E1] p-2.5"><Zap size={13} className="shrink-0 text-[#E85B3E]"/><p className="text-[8px] font-bold text-[#4F514A]">One clear view of what needs your attention next.</p></div>
     </div>
+    <p className="mt-7 text-center text-[9px] font-medium text-[#777970]">Illustrative interface · Sample candidate data</p>
   </div>;
 }
 
 export default function Home() {
-  return <main className="overflow-hidden bg-[#F8F8F4] text-[#20221C]">
-    <header className="relative z-20 mx-auto flex max-w-[1320px] items-center justify-between px-6 py-5 lg:px-12">
+  return <main className="overflow-hidden bg-[#F7F5EF] text-[#171916]">
+    <header className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5 lg:px-14">
       <Logo/>
-      <nav className="hidden items-center gap-8 text-[12px] font-semibold text-[#66685F] md:flex">
-        <a href="#platform" className="hover:text-black">Platform</a><a href="#how-it-works" className="hover:text-black">How it works</a><a href="#why-hiredaf" className="hover:text-black">Why HiredAF</a><a href="#faq" className="hover:text-black">FAQs</a>
+      <nav className="hidden items-center gap-8 text-[11px] font-bold text-[#62645D] md:flex">
+        <a href="#how" className="transition hover:text-[#FF6848]">How it works</a>
+        <a href="#product" className="transition hover:text-[#FF6848]">The workspace</a>
+        <a href="#faq" className="transition hover:text-[#FF6848]">FAQs</a>
       </nav>
-      <div className="flex items-center gap-3"><Link href="/login" className="hidden text-[12px] font-bold sm:block">Log in</Link><Link href="/login" className="group inline-flex items-center gap-2 rounded-full bg-[#20221C] px-5 py-3 text-[11px] font-bold text-white transition hover:bg-[#373A30]">Get started <ArrowUpRight size={14}/></Link></div>
+      <div className="flex items-center gap-4"><Link href="/login" className="hidden text-[11px] font-bold sm:block">Log in</Link><Link href="/login" className="inline-flex items-center gap-2 bg-[#171916] px-4 py-3 text-[10px] font-extrabold text-white transition hover:bg-[#FF6848]">Explore HiredAF <ArrowUpRight size={13}/></Link></div>
     </header>
 
-    <section className="relative">
-      <div className="hero-grid pointer-events-none absolute inset-x-0 top-0 h-[800px]"/>
-      <div className="relative mx-auto grid max-w-[1320px] items-center gap-14 px-6 pb-24 pt-12 lg:grid-cols-[1fr_1fr] lg:px-12 lg:pb-32 lg:pt-20">
-        <div className="relative z-10">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/80 px-3.5 py-2 text-[9px] font-bold tracking-[.15em] text-[#65675E] shadow-sm"><span className="h-2 w-2 rounded-full bg-[#A7D64F]"/> RECRUITING, REIMAGINED FOR GROWING TEAMS</div>
-          <h1 className="max-w-[700px] text-[clamp(3.6rem,7.3vw,6.7rem)] font-black leading-[.9] tracking-[-.09em]">Good people.<br/>Great teams.<br/><span className="relative inline-block">Less hiring chaos.<i className="absolute -bottom-1 left-0 -z-10 h-[18%] w-full -rotate-1 bg-[#C6F36B]"/></span></h1>
-          <p className="mt-8 max-w-[500px] text-[16px] leading-8 text-[#686A61]">The recruiting workspace built to help growing businesses organize candidates, manage open roles, and move great people through the hiring process — without the spreadsheet circus.</p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row"><Link href="/login" className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#20221C] px-7 py-4 text-[12px] font-bold text-white shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:bg-[#373A30]">Explore HiredAF <ArrowRight size={15} className="transition group-hover:translate-x-1"/></Link><a href="#how-it-works" className="inline-flex items-center justify-center gap-2 rounded-full border border-black/15 bg-white/70 px-7 py-4 text-[12px] font-bold hover:bg-white">See how it works <ArrowDown size={14}/></a></div>
-          <div className="mt-12 flex items-center gap-3 border-t border-black/10 pt-6"><span className="grid h-9 w-9 place-items-center rounded-full bg-[#EAF1DD] text-[#6F9634]"><ShieldCheck size={17}/></span><p className="text-[10px] leading-5 text-[#77796F]"><strong className="text-[#20221C]">People-first by design.</strong><br/>AI can assist the process. Your team makes the decisions.</p></div>
+    <section className="relative border-y border-[#E4E1D8]">
+      <div className="absolute inset-0 opacity-[.22]" style={{backgroundImage:"linear-gradient(#B9B5AA 1px, transparent 1px),linear-gradient(90deg,#B9B5AA 1px,transparent 1px)",backgroundSize:"44px 44px"}}/>
+      <div className="relative mx-auto grid max-w-[1400px] items-center gap-14 px-6 py-16 sm:py-20 lg:grid-cols-[1.02fr_.98fr] lg:px-14 lg:py-24">
+        <div>
+          <p className="mb-7 inline-flex items-center gap-2 border border-[#D7D3C8] bg-[#F7F5EF]/90 px-3 py-2 text-[9px] font-black tracking-[.17em]"><span className="h-2 w-2 bg-[#FF6848]"/> RECRUITING FOR THE REAL WORLD</p>
+          <h1 className="max-w-[760px] text-[clamp(3.5rem,7.6vw,7.2rem)] font-black leading-[.86] tracking-[-.095em]">Your next hire <span className="font-serif font-medium italic tracking-[-.08em] text-[#FF6848]">shouldn’t</span> take over your week.</h1>
+          <p className="mt-8 max-w-[490px] text-[15px] leading-7 text-[#65675F] sm:text-[16px]">Hiring is already a big job. HiredAF gives growing teams one place to manage roles, keep track of candidates, and move every application forward—without the spreadsheet scavenger hunt.</p>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Link href="/login" className="inline-flex items-center justify-center gap-3 bg-[#FF6848] px-6 py-4 text-[11px] font-black text-white transition hover:-translate-y-0.5 hover:bg-[#E95739]">Get into the workspace <ArrowRight size={15}/></Link>
+            <a href="#how" className="inline-flex items-center justify-center border border-[#BEBBB1] px-6 py-4 text-[11px] font-black transition hover:bg-white">See what changes <ArrowUpRight size={14}/></a>
+          </div>
+          <div className="mt-9 flex max-w-[470px] items-start gap-3 border-t border-[#D9D6CC] pt-5"><ShieldCheck size={17} className="mt-0.5 shrink-0 text-[#E85B3E]"/><p className="text-[10px] leading-5 text-[#777970]"><strong className="text-[#171916]">Built to support better decisions.</strong> HiredAF helps organize the process. Your people make the hiring calls.</p></div>
         </div>
-        <ProductWindow/>
+        <HiringBoard/>
+      </div>
+      <div className="relative border-t border-[#E4E1D8] bg-[#FF6848]"><div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-4 text-[9px] font-black tracking-[.12em] text-white lg:px-14"><span>LESS CHASING.</span><span>LESS GUESSWORK.</span><span>FEWER DROPPED BALLS.</span><span>MORE TIME FOR PEOPLE.</span></div></div>
+    </section>
+
+    <section id="how" className="mx-auto max-w-[1400px] px-6 py-24 lg:px-14 lg:py-32">
+      <div className="grid gap-12 lg:grid-cols-[.85fr_1.15fr]">
+        <div><p className="mb-5 text-[9px] font-black tracking-[.2em] text-[#E85B3E]">THE PROBLEM ISN’T YOU</p><h2 className="max-w-[520px] text-5xl font-black leading-[.91] tracking-[-.085em] sm:text-6xl">Hiring gets messy when the work is everywhere.</h2><p className="mt-7 max-w-[420px] text-[13px] leading-7 text-[#6D6F67]">A resume in email. Interview notes in a document. A status update in somebody’s head. When the details are scattered, good candidates and good time get lost.</p><div className="mt-8 inline-flex items-center gap-2 text-[10px] font-black"><span className="h-2 w-2 bg-[#FF6848]"/> ONE SHARED PLACE TO KEEP IT MOVING</div></div>
+        <div className="space-y-0 border-t border-[#D9D6CC]">{steps.map((s)=>{const Icon=s.icon;return <article key={s.n} className="grid grid-cols-[42px_1fr_auto] items-start gap-4 border-b border-[#D9D6CC] py-7 sm:grid-cols-[58px_1fr_auto] sm:gap-6"><span className="pt-1 text-[10px] font-black text-[#FF6848]">{s.n}</span><div><h3 className="text-[23px] font-black tracking-[-.06em] sm:text-[28px]">{s.title}</h3><p className="mt-2 max-w-[470px] text-[11px] leading-6 text-[#74766E]">{s.body}</p></div><Icon size={20} strokeWidth={1.7} className="mt-1 text-[#A1A196]"/></article>})}</div>
       </div>
     </section>
 
-    <section className="border-y border-black/10 bg-[#EFF0E8]"><div className="mx-auto flex max-w-[1320px] flex-col items-center justify-between gap-5 px-6 py-7 text-center md:flex-row md:px-12 md:text-left"><p className="text-[9px] font-extrabold tracking-[.18em] text-[#898B80]">HIRING SHOULD MOVE YOUR BUSINESS FORWARD</p><div className="flex flex-wrap justify-center gap-x-9 gap-y-3 text-[11px] font-black tracking-[-.03em] text-[#77796F]"><span>SMALL BUSINESSES</span><span>STARTUPS</span><span>GROWING TEAMS</span><span>RECRUITERS</span></div></div></section>
-
-    <section id="platform" className="mx-auto max-w-[1320px] px-6 py-24 lg:px-12 lg:py-32">
-      <div className="grid gap-12 lg:grid-cols-[.82fr_1.18fr]">
-        <div><Eyebrow>THE HIREDAF WORKSPACE</Eyebrow><h2 className="max-w-[480px] text-5xl font-black leading-[.96] tracking-[-.08em] sm:text-6xl">Everything hiring needs. <span className="text-[#8DBA3E]">Nothing it doesn’t.</span></h2><p className="mt-7 max-w-[400px] text-[13px] leading-7 text-[#73756B]">Stop juggling job posts, scattered resumes, and status updates across five different places. Keep your recruiting work connected from day one.</p><Link href="/login" className="mt-8 inline-flex items-center gap-2 text-[11px] font-bold underline decoration-[#A6CF5C] decoration-2 underline-offset-4">Take a look inside <ArrowUpRight size={14}/></Link></div>
-        <div className="grid gap-3 sm:grid-cols-2">{benefits.map((item,i)=>{const Icon=item.icon;return <article key={item.n} className={`group rounded-[22px] border border-black/10 bg-white p-7 transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(20,25,10,.07)] ${i===2?"sm:col-span-2 sm:flex sm:items-center sm:gap-10":""}`}><div className="flex items-center justify-between"><span className="grid h-11 w-11 place-items-center rounded-xl bg-[#F0F2E9] transition group-hover:bg-[#C6F36B]"><Icon size={19}/></span><span className="text-[10px] font-bold tracking-[.15em] text-[#B0B1A9]">{item.n}</span></div><div className={i===2?"mt-6 sm:mt-0 sm:flex-1":"mt-7"}><h3 className="text-[22px] font-black tracking-[-.06em]">{item.title}</h3><p className="mt-3 max-w-[420px] text-[11px] leading-6 text-[#77796F]">{item.copy}</p></div></article>})}</div>
+    <section id="product" className="bg-[#171916] text-white">
+      <div className="mx-auto grid max-w-[1400px] items-center gap-12 px-6 py-20 lg:grid-cols-[.9fr_1.1fr] lg:px-14 lg:py-28">
+        <div><p className="mb-5 text-[9px] font-black tracking-[.2em] text-[#FF8064]">MEET YOUR NEW HIRING HQ</p><h2 className="max-w-[540px] text-5xl font-black leading-[.92] tracking-[-.085em] sm:text-6xl">Know where every role—and every person—stands.</h2><p className="mt-7 max-w-[440px] text-[13px] leading-7 text-white/60">HiredAF brings the moving parts of recruiting into a shared workspace, so your team can spend less time tracking down information and more time moving forward.</p><ul className="mt-8 space-y-4">{["Manage open jobs and role details","Keep candidate profiles and notes together","Track applications through a clear pipeline","Give teammates access based on their role"].map(x=><li key={x} className="flex items-center gap-3 text-[11px] font-bold"><span className="grid h-5 w-5 place-items-center bg-[#FF6848]"><Check size={12}/></span>{x}</li>)}</ul><Link href="/login" className="mt-9 inline-flex items-center gap-3 bg-white px-6 py-4 text-[11px] font-black text-[#171916] transition hover:bg-[#FF6848] hover:text-white">Explore the workspace <ArrowRight size={15}/></Link></div>
+        <div className="border border-white/15 bg-[#22251F] p-3 sm:p-5"><div className="flex items-center justify-between border-b border-white/10 pb-3"><span className="text-[9px] font-black tracking-[.15em]">THE RECRUITING WORKFLOW</span><span className="text-[8px] text-white/40">BUILT FOR LEAN TEAMS</span></div><div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">{[["01","Jobs"],["02","Candidates"],["03","Applications"],["04","Pipeline"]].map(([n,t])=><div key={n} className="min-h-[120px] border border-white/10 p-3 sm:min-h-[145px] sm:p-4"><span className="text-[9px] font-black text-[#FF8064]">{n}</span><p className="mt-10 text-[14px] font-black tracking-[-.04em] sm:mt-14 sm:text-[16px]">{t}</p><div className="mt-2 h-1 w-8 bg-[#FF6848]"/></div>)}</div><div className="mt-3 flex items-center gap-3 bg-[#FF6848] p-4 text-white"><Clock3 size={17}/><p className="text-[10px] font-bold leading-5">Keep the next step visible. Keep your team on the same page.</p></div></div>
       </div>
     </section>
 
-    <section id="how-it-works" className="bg-[#20221C] py-24 text-white lg:py-32"><div className="mx-auto max-w-[1320px] px-6 lg:px-12">
-      <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr]"><div><Eyebrow light>THE PROCESS</Eyebrow><h2 className="max-w-[450px] text-5xl font-black leading-[.96] tracking-[-.08em] sm:text-6xl">A better way to <span className="text-[#C6F36B]">get to yes.</span></h2><p className="mt-6 max-w-[360px] text-[12px] leading-7 text-white/55">From the first job requirement to the final decision, keep the whole process moving with less friction.</p></div><div className="grid gap-3 sm:grid-cols-3">{workflow.map(([n,title,copy])=><article key={n} className="rounded-[20px] border border-white/10 bg-white/[.04] p-6"><span className="text-[10px] font-bold text-[#C6F36B]">{n} / 03</span><h3 className="mt-12 text-[18px] font-black tracking-[-.05em]">{title}</h3><p className="mt-3 text-[10px] leading-6 text-white/50">{copy}</p><div className="mt-8 h-px w-full bg-white/10"><div className="h-px w-1/3 bg-[#C6F36B]"/></div></article>)}</div></div>
-      <div className="mt-20 grid gap-8 rounded-[24px] bg-[#C6F36B] p-8 text-[#20221C] sm:grid-cols-[1fr_auto] sm:items-center sm:p-10"><div><p className="text-[9px] font-black tracking-[.2em]">YOUR NEXT GREAT HIRE STARTS HERE</p><h3 className="mt-3 max-w-[650px] text-3xl font-black tracking-[-.07em] sm:text-4xl">Make space for the people who move your business forward.</h3></div><Link href="/login" className="inline-flex items-center justify-center gap-3 rounded-full bg-[#20221C] px-6 py-4 text-[11px] font-bold text-white transition hover:bg-[#373A30]">Get started <ArrowUpRight size={15}/></Link></div>
-    </div></section>
+    <section className="mx-auto grid max-w-[1400px] gap-10 px-6 py-24 lg:grid-cols-2 lg:px-14 lg:py-28">
+      <div><p className="mb-5 text-[9px] font-black tracking-[.2em] text-[#E85B3E]">MADE FOR THE PEOPLE DOING THE WORK</p><h2 className="max-w-[540px] text-5xl font-black leading-[.92] tracking-[-.085em] sm:text-6xl">Big-company hiring structure. Without the big-company baggage.</h2></div>
+      <div className="space-y-6 text-[13px] leading-7 text-[#686A62]"><p>If you’re a founder, owner, operations lead, or recruiter at a growing company, hiring is probably one of ten things you’re responsible for. You don’t need another complicated system to babysit.</p><p>HiredAF is being built to make the process easier to see, easier to share, and easier to keep moving. AI-assisted capabilities are part of the roadmap, with human judgment at the center of every hiring decision.</p><div className="border-l-[3px] border-[#FF6848] pl-5 text-[18px] font-black leading-snug tracking-[-.04em] text-[#171916]">You run the business. Let your hiring process get organized.</div></div>
+    </section>
 
-    <section id="why-hiredaf" className="mx-auto max-w-[1320px] px-6 py-24 lg:px-12 lg:py-32"><div className="grid items-center gap-14 lg:grid-cols-2">
-      <div className="relative overflow-hidden rounded-[26px] bg-[#E9EDE0] p-8 sm:p-12"><div className="dot-pattern absolute inset-0 opacity-40"/><div className="relative"><div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#20221C] text-[#C6F36B]"><Sparkles size={24}/></div><p className="mt-16 text-[9px] font-extrabold tracking-[.18em] text-[#7A806D]">A HUMAN-CENTERED APPROACH</p><p className="mt-3 max-w-[420px] text-4xl font-black leading-[1.02] tracking-[-.07em]">Technology should make room for <span className="underline decoration-[#A4CB59] decoration-[5px] underline-offset-4">people.</span></p><div className="mt-10 flex items-center gap-2 text-[10px] font-bold text-[#73786A]"><ShieldCheck size={14} className="text-[#86AD3F]"/> Human decisions stay human.</div></div></div>
-      <div><Eyebrow>WHY WE’RE BUILDING THIS</Eyebrow><h2 className="text-5xl font-black leading-[.96] tracking-[-.08em] sm:text-6xl">Hiring is about people. Your tools should remember that.</h2><p className="mt-7 max-w-[480px] text-[13px] leading-7 text-[#73756B]">Small teams deserve recruiting tools that feel clear, useful, and manageable. HiredAF is being built to give growing businesses a place to organize the details, keep momentum, and spend more time having meaningful conversations.</p><div className="mt-8 space-y-4">{["A shared view of every open role","Candidate context that doesn’t get lost","Clear next steps for every application","AI assistance designed to support—not replace—human judgment"].map(x=><div key={x} className="flex items-center gap-3 text-[11px] font-bold"><span className="grid h-6 w-6 place-items-center rounded-full bg-[#EAF2DA] text-[#779D39]"><Check size={13}/></span>{x}</div>)}</div></div>
-    </div></section>
+    <section className="bg-[#E9E6DC]">
+      <div className="mx-auto grid max-w-[1400px] items-center gap-8 px-6 py-16 lg:grid-cols-[1fr_auto] lg:px-14 lg:py-20"><div><p className="mb-4 text-[9px] font-black tracking-[.2em] text-[#E85B3E]">READY TO GET OUT OF THE SPREADSHEET?</p><h2 className="max-w-[760px] text-4xl font-black leading-[.94] tracking-[-.08em] sm:text-6xl">Make hiring feel like part of the plan—not the whole plan.</h2><p className="mt-5 max-w-[520px] text-[12px] leading-6 text-[#6D6F67]">Explore the HiredAF workspace and see what a more organized hiring process can look like.</p></div><Link href="/login" className="inline-flex items-center justify-center gap-3 bg-[#FF6848] px-7 py-5 text-[11px] font-black text-white transition hover:bg-[#171916]">Get started with HiredAF <ArrowUpRight size={15}/></Link></div>
+    </section>
 
-    <section id="faq" className="border-y border-black/10 bg-[#EFF0E8]"><div className="mx-auto grid max-w-[1320px] gap-12 px-6 py-24 lg:grid-cols-[.7fr_1.3fr] lg:px-12"><div><Eyebrow>GOOD QUESTIONS</Eyebrow><h2 className="text-5xl font-black leading-[.96] tracking-[-.08em]">A few things you might be wondering.</h2><p className="mt-6 text-[12px] leading-6 text-[#77796F]">Still curious? We’re building HiredAF with growing teams in mind.</p></div><div className="divide-y divide-black/10">{faqs.map(([q,a])=><details key={q} className="group py-5 first:pt-0"><summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-[14px] font-extrabold tracking-[-.03em]">{q}<span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-black/10 transition group-open:rotate-45"><span className="text-lg font-normal">+</span></span></summary><p className="max-w-[620px] pt-4 text-[12px] leading-7 text-[#707269]">{a}</p></details>)}</div></div></section>
+    <section id="faq" className="mx-auto grid max-w-[1400px] gap-12 px-6 py-24 lg:grid-cols-[.7fr_1.3fr] lg:px-14"><div><p className="mb-5 text-[9px] font-black tracking-[.2em] text-[#E85B3E]">BEFORE YOU JUMP IN</p><h2 className="text-5xl font-black leading-[.92] tracking-[-.085em]">Fair questions.</h2></div><div className="border-t border-[#D9D6CC]">{questions.map(([q,a])=><details key={q} className="group border-b border-[#D9D6CC] py-5"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[13px] font-black"><span>{q}</span><ChevronDown size={16} className="shrink-0 transition group-open:rotate-180"/></summary><p className="max-w-[650px] pt-4 text-[11px] leading-6 text-[#6D6F67]">{a}</p></details>)}</div></section>
 
-    <footer className="bg-[#20221C] text-white"><div className="mx-auto max-w-[1320px] px-6 py-12 lg:px-12"><div className="flex flex-col justify-between gap-10 border-b border-white/10 pb-10 md:flex-row md:items-end"><div><Logo inverse/><p className="mt-5 max-w-[360px] text-[12px] leading-6 text-white/50">Recruiting tools for teams with places to go.</p></div><div className="flex flex-wrap gap-x-7 gap-y-3 text-[10px] font-semibold text-white/65"><a href="#platform" className="hover:text-[#C6F36B]">Platform</a><a href="#how-it-works" className="hover:text-[#C6F36B]">How it works</a><a href="#faq" className="hover:text-[#C6F36B]">FAQs</a><Link href="/login" className="hover:text-[#C6F36B]">Log in</Link></div></div><div className="flex flex-col justify-between gap-3 pt-6 text-[9px] text-white/35 sm:flex-row"><span>© {new Date().getFullYear()} HiredAF. All rights reserved.</span><span>Built for what’s next.</span></div></div></footer>
+    <footer className="bg-[#171916] text-white"><div className="mx-auto max-w-[1400px] px-6 py-10 lg:px-14"><div className="flex flex-col justify-between gap-8 border-b border-white/15 pb-8 sm:flex-row sm:items-center"><div><Logo light/><p className="mt-3 text-[10px] text-white/45">A clearer way to get great people on your team.</p></div><div className="flex flex-wrap gap-6 text-[10px] font-bold text-white/65"><a href="#how">How it works</a><a href="#product">The workspace</a><a href="#faq">FAQs</a><Link href="/login">Log in</Link></div></div><div className="flex flex-col justify-between gap-2 pt-5 text-[9px] text-white/35 sm:flex-row"><span>© {new Date().getFullYear()} HiredAF. All rights reserved.</span><span>Hiring, without the chaos.</span></div></div></footer>
   </main>;
 }
