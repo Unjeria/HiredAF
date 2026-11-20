@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "HiredAF — Hiring, without the headache.",
+  title: "HiredAF — Your next hire shouldn’t take over your week.",
   description:
-    "Meet the AI recruiting workspace built to help ambitious teams find, connect with, and hire the right people.",
+    "A clearer hiring workspace for growing teams. Manage roles, candidates, and applications without the spreadsheet scramble.",
   openGraph: {
     title: "HiredAF — Hiring, without the headache.",
-    description: "Less busywork. Better people. Faster hires.",
+    description: "Less chasing. Less guesswork. More time for people.",
     type: "website",
   },
 };
