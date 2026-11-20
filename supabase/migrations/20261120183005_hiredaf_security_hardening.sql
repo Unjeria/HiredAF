@@ -45,6 +45,17 @@ end; $$;
 revoke all on function private.handle_new_user() from public, anon, authenticated;
 create trigger on_auth_user_created after insert on auth.users for each row execute procedure private.handle_new_user();
 
+
+drop policy if exists "Owners and admins can add members" on public.organization_members;
+create policy "Owners and admins can add members" on public.organization_members for insert to authenticated
+with check(private.has_org_role(organization_id,array['owner','admin']::public.member_role[])
+ and (role <> 'owner' or private.has_org_role(organization_id,array['owner']::public.member_role[])));
+drop policy if exists "Owners and admins can update members" on public.organization_members;
+create policy "Owners and admins can update members" on public.organization_members for update to authenticated
+using(private.has_org_role(organization_id,array['owner','admin']::public.member_role[]))
+with check(private.has_org_role(organization_id,array['owner','admin']::public.member_role[])
+ and (role <> 'owner' or private.has_org_role(organization_id,array['owner']::public.member_role[])));
+
 create index if not exists activity_events_actor_id_idx on public.activity_events(actor_id);
 create index if not exists applications_candidate_id_idx on public.applications(candidate_id);
 create index if not exists candidates_created_by_idx on public.candidates(created_by);
