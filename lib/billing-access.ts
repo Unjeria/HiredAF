@@ -22,13 +22,13 @@ export async function requireActiveSubscription(organizationId: string, returnTo
   return { supabase, planKey: subscription.plan_key };
 }
 
-export async function requirePlanCapacity(organizationId: string, resource: CapacityResource, returnTo: string) {
+export async function requirePlanCapacity(organizationId: string, resource: CapacityResource, returnTo: string, excludeId?: string) {
   const { supabase, planKey } = await requireActiveSubscription(organizationId, returnTo);
   const limit = limits[planKey]?.[resource];
   if (limit === undefined) redirect("/billing?message=Your%20plan%20could%20not%20be%20verified");
   if (!Number.isFinite(limit)) return;
   const query = resource === "openJobs"
-    ? supabase.from("jobs").select("id", { count: "exact", head: true }).eq("organization_id", organizationId).eq("status", "open")
+    ? supabase.from("jobs").select("id", { count: "exact", head: true }).eq("organization_id", organizationId).eq("status", "open").neq("id", excludeId ?? "00000000-0000-0000-0000-000000000000")
     : supabase.from("candidates").select("id", { count: "exact", head: true }).eq("organization_id", organizationId);
   const { count, error } = await query;
   if (error) redirect("/billing?error=Unable%20to%20verify%20your%20plan%20usage");
