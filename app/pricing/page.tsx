@@ -5,9 +5,9 @@ import { startCheckout } from "./actions";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 
 const plans = [
-  { key: "launch", name: "Launch", price: "$499", note: "For a growing team getting its hiring process organized.", features: ["Recruiting workspace", "Job and applicant management", "Candidate profiles and pipeline", "Core hiring dashboard"] },
-  { key: "growth", name: "Growth", price: "$999", note: "For teams coordinating hiring across more people.", features: ["Everything in Launch", "Expanded team workflows", "Scheduling assistance", "Pipeline analytics"] },
-  { key: "scale", name: "Scale", price: "$1,999", note: "For multi-team organizations with more complex hiring.", features: ["Everything in Growth", "Multiple departments and teams", "Advanced reporting and admin controls", "Onboarding support"] },
+  { key: "launch", name: "Launch", price: "$499", note: "For a growing team getting its hiring process organized.", features: ["Recruiting workspace", "Up to 3 open roles", "Up to 100 candidate profiles", "Job, applicant, and pipeline tracking"] },
+  { key: "growth", name: "Growth", price: "$999", note: "For teams coordinating hiring across more people.", features: ["Everything in Launch", "Up to 15 open roles", "Up to 1,000 candidate profiles", "Job, applicant, and pipeline tracking"] },
+  { key: "scale", name: "Scale", price: "$1,999", note: "For multi-team organizations with more complex hiring.", features: ["Everything in Growth", "Unlimited open roles", "Unlimited candidate profiles", "Department and job tracking"] },
 ];
 
 export default async function PricingPage({ searchParams }: { searchParams: Promise<{ error?: string; message?: string; cancelled?: string }> }) {
@@ -34,7 +34,7 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
           <form action={startCheckout} className="mt-8"><input type="hidden" name="plan" value={plan.key}/><button disabled={!membership || !["owner","admin"].includes(membership.role)} className={`flex w-full items-center justify-center gap-2 px-4 py-4 text-[10px] font-black disabled:cursor-not-allowed disabled:opacity-40 ${index === 1 ? "bg-[#FF6848] text-white" : "bg-[#171916] text-white"}`}>CHOOSE {plan.name.toUpperCase()} <ArrowRight size={14}/></button></form>
         </article>)}
       </div>
-      <p className="mt-8 max-w-3xl text-[10px] leading-6 text-[#85877D]">HiredAF is in an early release. The live workspace currently supports jobs, candidates, applications, and pipeline tracking. Some advanced capabilities shown in plan descriptions are still being developed and should not be relied on until confirmed available. Hiring decisions remain with your team.</p>
+      <p className="mt-8 max-w-3xl text-[10px] leading-6 text-[#85877D]">The current release includes workspace management, job openings, candidate profiles, and application pipeline tracking. Open-role and candidate limits are enforced by plan. AI-assisted screening, matching, job-description generation, and automated follow-ups are not included yet. Hiring decisions remain with your team.</p>
       <p className="mt-3 text-[10px] text-[#85877D]">Enterprise agreements are handled separately. Contact details will be provided before the Enterprise plan opens.</p>
     </section>
     <footer className="mx-auto max-w-6xl border-t border-black/10 py-5 text-[9px] text-[#85877D]">© {new Date().getFullYear()} HiredAF</footer>
