@@ -4,32 +4,37 @@ AI-powered recruiting workspace for growing teams.
 
 ## Getting started
 
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
+1. Copy `.env.example` to `.env.local`.
+2. Add your Supabase project URL and publishable key.
+3. Run `npm install`, then `npm run dev`.
+4. Open [http://localhost:3000](http://localhost:3000).
 
 ## Stack
 
-- Next.js App Router
-- React + TypeScript
-- Tailwind CSS
-- Lucide icons
+- Next.js App Router + React + TypeScript
+- Tailwind CSS + Lucide
+- Supabase Auth + Postgres + Row Level Security
 
-## Current status
+## Supabase setup
 
-The first commit establishes the HiredAF public landing page and responsive brand system. Product functionality (authentication, employer workspaces, candidate records, recruiting workflows, and AI integrations) is not connected yet.
+The initial schema is in `supabase/migrations/20261120000000_hiredaf_initial_recruiting_schema.sql`.
+It creates profiles, organizations, organization memberships, jobs, candidates, applications, and activity events, with tenant-scoped Row Level Security policies.
 
-## Environment
+Set these environment variables in your local `.env.local` and your deployment provider:
 
-Add secrets to `.env.local` only. Never commit API keys or service-role credentials.
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_your_key
+```
 
-## Next milestones
+Never put a Supabase secret key or service-role key in a `NEXT_PUBLIC_*` variable or commit it to Git.
 
-1. Connect the production domain and deployment.
-2. Add Supabase authentication, database, and tenant-aware permissions.
-3. Build employer workspace and job management.
-4. Add candidate intake, profiles, and application tracking.
-5. Add AI-assisted job creation, candidate summaries, and matching with human review.
+## Current product foundation
+
+- Public HiredAF landing page
+- Supabase browser/server clients and session refresh middleware
+- Email/password sign-up and sign-in
+- Protected employer dashboard
+- Workspace creation and first recruiting data views
+
+AI screening, resume parsing, candidate portal, invitations, and production email/domain configuration are future milestones. AI-generated recommendations should support—not make—employment decisions.
