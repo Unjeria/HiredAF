@@ -14,8 +14,7 @@ AI-powered recruiting workspace for growing teams.
 - Supabase Auth, Postgres, and Row Level Security
 
 ## Supabase
-The initial schema is in `supabase/migrations/20261120000000_hiredaf_initial_recruiting_schema.sql`.
-It creates profiles, organizations, memberships, jobs, candidates, applications, and activity events with workspace-scoped access controls.
+Apply the SQL files in `supabase/migrations/` in timestamp order. They create profiles, organizations, memberships, jobs, candidates, applications, and activity events; enable workspace-scoped Row Level Security; move authorization helpers into a private schema; and expose a signed-in-only workspace-creation RPC.
 
 Set the following variables in `.env.local` and the deployment provider:
 ```bash
@@ -30,6 +29,6 @@ Never expose a Supabase secret or service-role key in browser code or commit it 
 - Supabase SSR clients and session refresh middleware
 - Email/password registration and login
 - Protected employer dashboard and workspace creation
-- Initial recruiting database schema
+- Initial recruiting database schema and generated TypeScript types
 
 Job creation, candidate intake, invitations, AI-assisted summaries/matching, and production domain/email configuration remain next milestones. AI recommendations must support human review—not make employment decisions.
