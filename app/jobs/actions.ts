@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { requireActiveSubscription } from "@/lib/billing-access";
+import { requireActiveSubscription, requirePlanCapacity } from "@/lib/billing-access";
 
 export async function createJob(formData: FormData) {
   const title = String(formData.get("title") ?? "").trim();
@@ -20,6 +20,7 @@ export async function createJob(formData: FormData) {
   const { data: membership } = await supabase.from("organization_members").select("organization_id,role").order("created_at",{ascending:true}).limit(1).maybeSingle();
   if (!membership || !["owner","admin","recruiter"].includes(membership.role)) redirect("/dashboard?error=You%20do%20not%20have%20permission%20to%20create%20jobs");
   await requireActiveSubscription(membership.organization_id, "/jobs");
+  if (status === "open") await requirePlanCapacity(membership.organization_id, "openJobs", "/jobs");
 
   const { error } = await supabase.from("jobs").insert({
     organization_id: membership.organization_id,
