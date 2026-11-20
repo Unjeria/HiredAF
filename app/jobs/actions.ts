@@ -2,6 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { requireActiveSubscription } from "@/lib/billing-access";
 
 export async function createJob(formData: FormData) {
   const title = String(formData.get("title") ?? "").trim();
@@ -18,6 +19,7 @@ export async function createJob(formData: FormData) {
   if (!auth?.claims) redirect("/login");
   const { data: membership } = await supabase.from("organization_members").select("organization_id,role").order("created_at",{ascending:true}).limit(1).maybeSingle();
   if (!membership || !["owner","admin","recruiter"].includes(membership.role)) redirect("/dashboard?error=You%20do%20not%20have%20permission%20to%20create%20jobs");
+  await requireActiveSubscription(membership.organization_id, "/jobs");
 
   const { error } = await supabase.from("jobs").insert({
     organization_id: membership.organization_id,
@@ -37,6 +39,8 @@ export async function updateJobStatus(formData: FormData) {
   const { data: auth } = await supabase.auth.getClaims(); if (!auth?.claims) redirect("/login");
   const { data: membership } = await supabase.from("organization_members").select("organization_id,role").order("created_at",{ascending:true}).limit(1).maybeSingle();
   if (!membership) redirect("/dashboard");
+  if (!["owner","admin","recruiter"].includes(membership.role)) redirect("/dashboard?error=You%20cannot%20update%20jobs");
+  await requireActiveSubscription(membership.organization_id, "/jobs");
   const { error } = await supabase.from("jobs").update({status: status as "draft"|"open"|"paused"|"closed",updated_at:new Date().toISOString()}).eq("id",id).eq("organization_id",membership.organization_id);
   if(error) redirect("/jobs?error=Could%20not%20update%20job");
   revalidatePath("/jobs"); revalidatePath("/dashboard"); redirect("/jobs?success=Job%20updated");
