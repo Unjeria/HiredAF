@@ -30,8 +30,14 @@ export default async function DashboardPage({ searchParams }: Props) {
 
   return (
     <main className="min-h-screen bg-[#F7F7F2] text-[#20221C]">
-      <header className="flex items-center justify-between border-b border-black/10 bg-white px-5 py-4 sm:px-9">
+      <header className="flex flex-wrap items-center justify-between gap-4 border-b border-black/10 bg-white px-5 py-4 sm:px-9">
         <Link href="/" className="text-2xl font-black tracking-[-.07em]">hired<span className="text-[#86B52F]">AF</span></Link>
+        <nav className="flex flex-wrap gap-4 text-sm font-semibold">
+          <Link href="/dashboard" className="text-[#719B2D]">Overview</Link>
+          <Link href="/jobs">Jobs</Link>
+          <Link href="/candidates">Candidates</Link>
+          <Link href="/pipeline">Pipeline</Link>
+        </nav>
         <form action={signOut}><button className="rounded-full border border-black/15 px-4 py-2 text-sm font-semibold hover:bg-black/5">Sign out</button></form>
       </header>
       <div className="mx-auto max-w-7xl px-5 py-10 sm:px-9">
