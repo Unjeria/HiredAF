@@ -7,6 +7,7 @@ const items = [
   { href: "/jobs", label: "Jobs", icon: BriefcaseBusiness, key: "jobs" },
   { href: "/candidates", label: "People", icon: Users, key: "candidates" },
   { href: "/pipeline", label: "Pipeline", icon: Workflow, key: "pipeline" },
+  { href: "/billing", label: "Billing", icon: Workflow, key: "billing" },
 ];
 
 export default function WorkspaceShell({ children, active, workspaceName, role }: {
