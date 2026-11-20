@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createCandidate } from "./actions";
 import { signOut } from "@/app/auth/actions";
+import CandidateDirectory from "./candidate-directory";
 type Props={searchParams:Promise<{error?:string;success?:string}>};
 const field="w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-sm outline-none focus:border-[#86B52F]";
 export default async function CandidatesPage({searchParams}:Props){
