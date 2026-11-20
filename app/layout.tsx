@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "HiredAF — Your next hire shouldn’t take over your week.",
   description:
     "A clearer hiring workspace for growing teams. Manage roles, candidates, and applications without the spreadsheet scramble.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://hiredaf.com"),
+  ...(process.env.NEXT_PUBLIC_SITE_URL ? { metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL) } : {}),
   openGraph: {
     title: "HiredAF — Hiring, without the headache.",
     description: "Less chasing. Less guesswork. More time for people.",
