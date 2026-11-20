@@ -72,7 +72,7 @@ export default function Home() {
           <a className="transition hover:text-black" href="#platform">Platform</a>
           <a className="transition hover:text-black" href="#why-hiredaf">Why HiredAF</a>
         </nav>
-        <a href="mailto:hello@hiredaf.com?subject=HiredAF%20early%20access" className="group inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-[12px] font-bold text-white transition hover:bg-[#303229]">
+        <a href="/login" className="group inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-[12px] font-bold text-white transition hover:bg-[#303229]">
           Get early access <ArrowUpRight size={14} className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </a>
       </header>
@@ -92,7 +92,7 @@ export default function Home() {
               Meet the recruiting workspace that puts AI to work, cuts the busywork, and helps you find people who move your business forward.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a href="mailto:hello@hiredaf.com?subject=HiredAF%20early%20access" className="group inline-flex items-center justify-center gap-3 rounded-full bg-ink px-7 py-4 text-[13px] font-bold text-white shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:bg-[#303229]">
+              <a href="/login" className="group inline-flex items-center justify-center gap-3 rounded-full bg-ink px-7 py-4 text-[13px] font-bold text-white shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:bg-[#303229]">
                 Get early access <ArrowRight size={16} className="transition group-hover:translate-x-1" />
               </a>
               <a href="#how-it-works" className="inline-flex items-center justify-center gap-2 rounded-full border border-black/15 bg-white/60 px-7 py-4 text-[13px] font-bold transition hover:bg-white">
