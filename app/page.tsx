@@ -124,7 +124,7 @@ export default function Home() {
                   {[["24", "Candidates"], ["08", "Shortlisted"], ["03", "Open roles"]].map(([n, label]) => <div key={label} className="rounded-xl bg-[#F6F7F2] p-3"><p className="text-[22px] font-black tracking-[-.06em]">{n}</p><p className="mt-1 text-[9px] font-semibold text-[#85877D]">{label}</p></div>)}
                 </div>
                 <div className="mt-5 rounded-2xl border border-black/[.07] p-4">
-                  <div className="flex items-center justify-between"><div><p className="text-[11px] font-bold">AI match insights</p><p className="mt-0.5 text-[9px] text-[#96988E]">Top matches for Product Designer</p></div><span className="rounded-full bg-[#EFF6DF] px-2.5 py-1 text-[8px] font-bold text-[#638C27]">LIVE PREVIEW</span></div>
+                  <div className="flex items-center justify-between"><div><p className="text-[11px] font-bold">AI match insights</p><p className="mt-0.5 text-[9px] text-[#96988E]">Top matches for Product Designer</p></div><span className="rounded-full bg-[#EFF6DF] px-2.5 py-1 text-[8px] font-bold text-[#638C27]">PRODUCT PREVIEW</span></div>
                   <div className="mt-4 space-y-3">
                     {[
                       ["JD", "Jordan Davis", "Product Designer · 5 yrs", "96%"],
