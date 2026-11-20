@@ -26,12 +26,18 @@ async function recordRiskEvent(eventId: string, type: string, customerId: string
   }
 }
 
-async function syncSubscription(subscription: Stripe.Subscription, forcedStatus?: string) {
+async function syncSubscription(subscription: Stripe.Subscription) {
   const admin = createAdminClient();
   const customerId = typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id;
   const { data: existing } = await admin.from("billing_subscriptions").select("organization_id,plan_key").eq("stripe_customer_id", customerId).maybeSingle();
   const organizationId = subscription.metadata.organization_id || existing?.organization_id;
-  const planKey = subscription.metadata.plan_key || existing?.plan_key;
+  const priceId = subscription.items.data[0]?.price.id;
+  const priceToPlan: Record<string, string> = {
+    [process.env.STRIPE_PRICE_LAUNCH ?? ""]: "launch",
+    [process.env.STRIPE_PRICE_GROWTH ?? ""]: "growth",
+    [process.env.STRIPE_PRICE_SCALE ?? ""]: "scale",
+  };
+  const planKey = priceToPlan[priceId ?? ""] || subscription.metadata.plan_key || existing?.plan_key;
   if (!organizationId || !["launch", "growth", "scale"].includes(planKey ?? "")) {
     console.error("Stripe subscription could not be mapped to a HiredAF workspace.", subscription.id);
     return;
@@ -44,7 +50,7 @@ async function syncSubscription(subscription: Stripe.Subscription, forcedStatus?
     stripe_subscription_id: subscription.id,
     stripe_price_id: item?.price.id ?? null,
     plan_key: planKey,
-    status: forcedStatus ?? subscription.status,
+    status: subscription.status,
     current_period_end: periodEnd ? new Date(periodEnd * 1000).toISOString() : null,
     cancel_at_period_end: subscription.cancel_at_period_end,
     updated_at: new Date().toISOString(),
@@ -103,7 +109,7 @@ export async function POST(request: Request) {
           const { data: current } = await admin.from("billing_subscriptions").select("stripe_subscription_id").eq("stripe_customer_id", customerId).maybeSingle();
           if (current?.stripe_subscription_id) {
             const subscription = await getStripe().subscriptions.retrieve(current.stripe_subscription_id);
-            await syncSubscription(subscription, event.type === "invoice.paid" ? "active" : "past_due");
+            await syncSubscription(subscription);
           }
         }
         break;
