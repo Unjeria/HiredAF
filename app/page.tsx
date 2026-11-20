@@ -64,8 +64,9 @@ export default function Home() {
         <a href="#how" className="transition hover:text-[#FF6848]">How it works</a>
         <a href="#product" className="transition hover:text-[#FF6848]">The workspace</a>
         <a href="#faq" className="transition hover:text-[#FF6848]">FAQs</a>
+        <Link href="/pricing" className="transition hover:text-[#FF6848]">Pricing</Link>
       </nav>
-      <div className="flex items-center gap-4"><Link href="/login" className="hidden text-[11px] font-bold sm:block">Log in</Link><Link href="/login" className="inline-flex items-center gap-2 bg-[#171916] px-4 py-3 text-[10px] font-extrabold text-white transition hover:bg-[#FF6848]">Explore HiredAF <ArrowUpRight size={13}/></Link></div>
+      <div className="flex items-center gap-4"><Link href="/login" className="hidden text-[11px] font-bold sm:block">Log in</Link><Link href="/pricing" className="hidden text-[11px] font-bold sm:block">Pricing</Link><Link href="/login" className="inline-flex items-center gap-2 bg-[#171916] px-4 py-3 text-[10px] font-extrabold text-white transition hover:bg-[#FF6848]">Explore HiredAF <ArrowUpRight size={13}/></Link></div>
     </header>
 
     <section className="relative border-y border-[#E4E1D8]">
@@ -111,6 +112,6 @@ export default function Home() {
 
     <section id="faq" className="mx-auto grid max-w-[1400px] gap-12 px-6 py-24 lg:grid-cols-[.7fr_1.3fr] lg:px-14"><div><p className="mb-5 text-[9px] font-black tracking-[.2em] text-[#E85B3E]">BEFORE YOU JUMP IN</p><h2 className="text-5xl font-black leading-[.92] tracking-[-.085em]">Fair questions.</h2></div><div className="border-t border-[#D9D6CC]">{questions.map(([q,a])=><details key={q} className="group border-b border-[#D9D6CC] py-5"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[13px] font-black"><span>{q}</span><ChevronDown size={16} className="shrink-0 transition group-open:rotate-180"/></summary><p className="max-w-[650px] pt-4 text-[11px] leading-6 text-[#6D6F67]">{a}</p></details>)}</div></section>
 
-    <footer className="bg-[#171916] text-white"><div className="mx-auto max-w-[1400px] px-6 py-10 lg:px-14"><div className="flex flex-col justify-between gap-8 border-b border-white/15 pb-8 sm:flex-row sm:items-center"><div><Logo light/><p className="mt-3 text-[10px] text-white/45">A clearer way to get great people on your team.</p></div><div className="flex flex-wrap gap-6 text-[10px] font-bold text-white/65"><a href="#how">How it works</a><a href="#product">The workspace</a><a href="#faq">FAQs</a><Link href="/login">Log in</Link></div></div><div className="flex flex-col justify-between gap-2 pt-5 text-[9px] text-white/35 sm:flex-row"><span>© {new Date().getFullYear()} HiredAF. All rights reserved.</span><span>Hiring, without the chaos.</span></div></div></footer>
+    <footer className="bg-[#171916] text-white"><div className="mx-auto max-w-[1400px] px-6 py-10 lg:px-14"><div className="flex flex-col justify-between gap-8 border-b border-white/15 pb-8 sm:flex-row sm:items-center"><div><Logo light/><p className="mt-3 text-[10px] text-white/45">A clearer way to get great people on your team.</p></div><div className="flex flex-wrap gap-6 text-[10px] font-bold text-white/65"><a href="#how">How it works</a><a href="#product">The workspace</a><a href="#faq">FAQs</a><Link href="/login">Log in</Link><Link href="/pricing">Pricing</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></div></div><div className="flex flex-col justify-between gap-2 pt-5 text-[9px] text-white/35 sm:flex-row"><span>© {new Date().getFullYear()} HiredAF. All rights reserved.</span><span>Hiring, without the chaos.</span></div></div></footer>
   </main>;
 }
